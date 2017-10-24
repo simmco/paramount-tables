@@ -1,0 +1,6 @@
+export const GET_ALL_ATTRIBUTES = 'GET_ALL_ATTRIBUTES';
+export const GET_ALL_VALUES = 'GET_ALL_VALUES';
+export const SELECT_ATTRIBUTE = 'SELECT_ATTRIBUTE';
+export const ADD_VALUE = 'ADD_VALUE';
+export const REMOVE_VALUE = 'REMOVE_VALUE';
+

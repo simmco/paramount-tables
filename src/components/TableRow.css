@@ -1,0 +1,30 @@
+.tableRow {
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.tableRow-isChoosen{
+    background-color: rgb(238, 238, 238);
+}
+
+.tableRow-content {
+    padding: 0 5px;
+}
+
+.tableRow:last-child {
+    border-bottom: 0;
+}
+
+.tableRow-levelOne {
+    color: rgb(152, 231, 48);
+}
+.tableRow-levelTwo {
+    color: rgb(238, 218, 34);
+}
+.tableRow-levelThree {
+    color: rgba(255, 0, 0, 0.692);
+}
