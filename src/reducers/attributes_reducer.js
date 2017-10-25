@@ -47,7 +47,6 @@ export default function(
                         return value.id !== action.payload.id;
                     });
                     item.values = val;
-                    return item;
                 }
                 return item;
             });

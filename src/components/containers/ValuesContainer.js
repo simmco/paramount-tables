@@ -46,7 +46,6 @@ class ValuesContainer extends React.Component {
 function mapStateToProps(state) {
     return {
         values: state.values,
-        attributes: state.attributes.items,
         selectedAttributeValuesIds: state.attributes.selectedAttributeValuesIds,
         selectedAttributeId: state.attributes.selectedAttributeId,
     };
