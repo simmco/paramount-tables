@@ -6,6 +6,15 @@ export const getAllAttributes = () => async dispatch => {
     try {
         const response = await fetch(URL + '/attribute_values');
         const attributes = await response.json();
+
+        const flattenAttributes = attributes.map(attribute => {
+            return {
+                ...attribute,
+                values: attribute.values.map(value => value.id),
+            };
+        });
+        console.log('flattenAttributes', flattenAttributes);
+        
         dispatch({
             type: GET_ALL_ATTRIBUTES,
             payload: attributes,
@@ -46,16 +55,20 @@ export const selectAttribute = id => {
 const addValue = (attributeId, value) => {
     return {
         type: ADD_VALUE,
-        id: attributeId,
-        payload: value,
+        payload: {
+            value: value,
+            attributeId,
+        },
     };
 };
 
-const removeTodo = (attributeId, value) => {
+const removeValue = (attributeId, value) => {
     return {
         type: REMOVE_VALUE,
-        id: attributeId,
-        payload: value,
+        payload: {
+            value: value,
+            attributeId,
+        },
     };
 };
 
@@ -65,7 +78,7 @@ export const addValueAction = (attributeId, value) => async dispatch => {
         await valueServerRequest(attributeId, value.id);
     } catch (e) {
         // undo the state change
-        dispatch(removeTodo(attributeId, value));
+        dispatch(removeValue(attributeId, value));
 
         // here we can dispatch an error for the UI
     }
@@ -73,7 +86,7 @@ export const addValueAction = (attributeId, value) => async dispatch => {
 
 export const removeValueAction = (attributeId, value) => async dispatch => {
     try {
-        dispatch(removeTodo(attributeId, value));
+        dispatch(removeValue(attributeId, value));
         await valueServerRequest(attributeId, value.id);
     } catch (e) {
         // undo the state change

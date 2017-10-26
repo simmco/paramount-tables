@@ -33,7 +33,7 @@ class ValuesContainer extends React.Component {
                         <TableRowValue
                             key={value.id}
                             value={value}
-                            handleOnClick={(selected, id) => this.handleValueOnClick(selected, id)}
+                            handleOnClick={(selected, value) => this.handleValueOnClick(selected, value)}
                             selected={this.isValueSelected(value.id)}
                         />
                     ))}
@@ -45,10 +45,22 @@ class ValuesContainer extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        values: state.values,
-        selectedAttributeValuesIds: state.attributes.selectedAttributeValuesIds,
-        selectedAttributeId: state.attributes.selectedAttributeId,
+        values: state.valuesState,
+        selectedAttributeValuesIds: getSelectedAttributesValueIds(
+            state.attributesState.selectedAttributeId,
+            state.attributesState.attributes
+        ),
+        selectedAttributeId: state.attributesState.selectedAttributeId,
     };
 }
 
 export default connect(mapStateToProps, actions)(ValuesContainer);
+
+function getSelectedAttributesValueIds(currentId, attributes) {
+    let selectedAttributes = [];
+    const currentAttribute = attributes.find(attribute => attribute.id === currentId);
+    if (currentAttribute) {
+        selectedAttributes = currentAttribute.values.map(value => value.id);
+    }
+    return selectedAttributes;
+}

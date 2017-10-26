@@ -1,10 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import classnames from 'classnames';
-import * as actions from '../actions';
 import './TableRow.css';
 
-class TableRowValue extends React.Component {
+export default class TableRowValue extends React.Component {
     render() {
         const { rank, name } = this.props.value;
         const { selected, value } = this.props;
@@ -14,7 +12,7 @@ class TableRowValue extends React.Component {
             { 'tableRow-levelOne': rank === 1 },
             { 'tableRow-levelTwo': rank === 2 },
             { 'tableRow-levelThree': rank === 3 },
-            { 'tableRow-isChoosen': selected }
+            { 'tableRow-selected': selected }
         );
         return (
             <div className={tableStyle} onClick={() => this.props.handleOnClick(selected, value)}>
@@ -23,11 +21,3 @@ class TableRowValue extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
-    return {
-        attributes: state.attributes,
-    };
-}
-
-export default connect(mapStateToProps, actions)(TableRowValue);

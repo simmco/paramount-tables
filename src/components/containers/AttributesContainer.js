@@ -36,8 +36,8 @@ class AttributesContainer extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        attributes: state.attributes.items,
-        selctedAttributeId: state.attributes.selectedAttributeId,
+        attributes: state.attributesState.attributes,
+        selctedAttributeId: state.attributesState.selectedAttributeId,
     };
 }
 

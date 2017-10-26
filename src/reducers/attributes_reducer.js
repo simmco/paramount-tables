@@ -1,59 +1,52 @@
 import { GET_ALL_ATTRIBUTES, SELECT_ATTRIBUTE, ADD_VALUE, REMOVE_VALUE } from '../actions/types';
 
-function getSelectedAttributesValueIds(currentId, items) {
-    let selectedAttributes = [];
-    const currentAttribute = items.find(attribute => attribute.id === currentId);
-    if (currentAttribute) {
-        selectedAttributes = currentAttribute.values.map(value => value.id);
-    }
-    return selectedAttributes;
-}
-
 export default function(
     state = {
-        items: [],
+        attributes: [],
         selectedAttributeId: '',
-        selectedAttributeValuesIds: [],
     },
     action
 ) {
     switch (action.type) {
         case GET_ALL_ATTRIBUTES:
-            return Object.assign({}, state, {
-                items: action.payload,
-            });
+            return {
+                ...state,
+                attributes: action.payload,
+            };
         case SELECT_ATTRIBUTE:
-            const selectedAttribute = state.items.find(attribute => attribute.id === action.id);
-            return Object.assign({}, state, {
-                selectedAttributeId: selectedAttribute.id,
-                selectedAttributeValuesIds: selectedAttribute.values.map(value => value.id),
-            });
+            return {
+                ...state,
+                selectedAttributeId: state.attributes.find(attribute => attribute.id === action.id).id,
+            };
         case ADD_VALUE:
-            const itemsAdded = state.items.map(item => {
-                const newValue = { id: action.payload.id, name: action.payload.name };
-                if (item.id === action.id) {
-                    item.values.push(newValue);
-                }
-                return item;
-            });
-            return Object.assign({}, state, {
-                items: itemsAdded,
-                selectedAttributeValuesIds: getSelectedAttributesValueIds(state.selectedAttributeId, itemsAdded),
-            });
+            return {
+                ...state,
+                attributes: state.attributes.map(attribute => {
+                    if (attribute.id === action.payload.attributeId) {
+                        const newValue = { id: action.payload.value.id, name: action.payload.value.name };
+                        return {
+                            ...attribute,
+                            values: [...attribute.values, newValue],
+                        };
+                    } else {
+                        return attribute;
+                    }
+                }),
+            };
         case REMOVE_VALUE:
-            const itemsRemoved = state.items.map(item => {
-                if (item.id === action.id) {
-                    const val = item.values.filter(value => {
-                        return value.id !== action.payload.id;
-                    });
-                    item.values = val;
-                }
-                return item;
-            });
-            return Object.assign({}, state, {
-                items: itemsRemoved,
-                selectedAttributeValuesIds: getSelectedAttributesValueIds(state.selectedAttributeId, itemsRemoved),
-            });
+            return {
+                ...state,
+                attributes: state.attributes.map(attribute => {
+                    if (attribute.id === action.payload.attributeId) {
+                        return {
+                            ...attribute,
+                            values: attribute.values.filter(value => value.id !== action.payload.value.id),
+                        };
+                    } else {
+                        return attribute;
+                    }
+                }),
+            };
         default:
             return state;
     }
