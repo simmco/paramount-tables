@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import * as actions from '../../actions';
-import Table from '../ui/Table';
-import TableRowValue from '../TableRowValue';
+import * as actions from '../actions';
+import Table from '../components/Table';
+import TableRowValue from '../components/TableRowValue';
 
 class ValuesContainer extends React.Component {
     componentDidMount() {

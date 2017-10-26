@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import AttributesContainer from './components/containers/AttributesContainer';
-import ValuesContainer from './components/containers/ValuesContainer';
+import AttributesContainer from './containers/AttributesContainer';
+import ValuesContainer from './containers/ValuesContainer';
 
 class App extends Component {
     render() {
