@@ -6,21 +6,13 @@ export const getAllAttributes = () => async dispatch => {
     try {
         const response = await fetch(URL + '/attribute_values');
         const attributes = await response.json();
-
-        const flattenAttributes = attributes.map(attribute => {
-            return {
-                ...attribute,
-                values: attribute.values.map(value => value.id),
-            };
-        });
-        console.log('flattenAttributes', flattenAttributes);
-        
         dispatch({
             type: GET_ALL_ATTRIBUTES,
             payload: attributes,
         });
     } catch (err) {
         console.log(err);
+        // here we can dispatch an error for the UI
     }
 };
 
@@ -34,6 +26,7 @@ export const getAllValues = () => async dispatch => {
         });
     } catch (err) {
         console.log(err);
+        // here we can dispatch an error for the UI
     }
 };
 
@@ -79,7 +72,6 @@ export const addValueAction = (attributeId, value) => async dispatch => {
     } catch (e) {
         // undo the state change
         dispatch(removeValue(attributeId, value));
-
         // here we can dispatch an error for the UI
     }
 };
